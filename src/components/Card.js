@@ -7,9 +7,10 @@ const images = importImages(require.context('../images/heroes', false, /\.(png|j
 
 const Card = ({data, onClickProp, hexKey}) => {
     const id = CryptoJS.AES.decrypt(data.i, hexKey).toString(CryptoJS.enc.Utf8)
-
+    console.log("OPC: ", data.openedCards)
+    console.log("DTI: ", data.index)
     return (
-        <CardContainer onClick={onClickProp} id={data.i} index={data.index} active>
+        <CardContainer onClick={onClickProp} id={data.i} data-index={data.index} active={data.index === data.openedCards[0]}>
             <CardFront>
                 <Image src={BackgroundCard} alt="BackgroundCard"/>
             </CardFront>

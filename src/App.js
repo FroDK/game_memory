@@ -30,12 +30,12 @@ const App = () => {
     // }
 
     const cardClick = (e) => {
-        console.log(e.currentTarget.id)
-        console.log(CryptoJS.AES.decrypt(e.currentTarget.id, hexKey).toString(CryptoJS.enc.Utf8))
-        console.log(e.currentTarget.getAttribute('index'))
+        console.log("CurrentTarget: ", e.currentTarget.id)
+        console.log("Decrypted: ", CryptoJS.AES.decrypt(e.currentTarget.id, hexKey).toString(CryptoJS.enc.Utf8))
+        console.log("Data index: ", e.currentTarget.getAttribute('data-index'))
 
-        if (e.currentTarget.index !== openedCards[0]) {
-            SetOpenedCards([...openedCards, e.currentTarget.index]);
+        if (e.currentTarget.getAttribute('data-index') !== openedCards[0]) {
+            SetOpenedCards([...openedCards, +e.currentTarget.getAttribute('data-index')]);
         }
     }
 
@@ -50,7 +50,8 @@ const App = () => {
                         <Card onClickProp={cardClick} key={index}
                               data={{
                                   i: CryptoJS.AES.encrypt(`${i}`, hexKey).toString(),
-                                  index: index
+                                  index,
+                                  openedCards
                               }}
                               hexKey={hexKey}>{index + 1}</Card>
                     )}
