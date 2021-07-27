@@ -1,21 +1,18 @@
-import styled, { css } from 'styled-components';
+import styled, {css} from 'styled-components';
 import BackgroundCard from '../images/kartinki-dota-2-34.jpg'
 import {importImages} from '../lib';
-import CryptoJS from 'crypto-js';
 
 const images = importImages(require.context('../images/heroes', false, /\.(png|jpe?g|svg)$/))
 
-const Card = ({data, onClickProp, hexKey}) => {
-    const id = CryptoJS.AES.decrypt(data.i, hexKey).toString(CryptoJS.enc.Utf8)
-    console.log("OPC: ", data.openedCards)
-    console.log("DTI: ", data.index)
+const Card = ({data, onClickProp}) => {
     return (
-        <CardContainer onClick={onClickProp} id={data.i} data-index={data.index} active={data.index === data.openedCards[0]}>
+        <CardContainer onClick={e => onClickProp(e, data.index, data.i)}
+                       active={data.openedCards.includes(data.index)}>
             <CardFront>
                 <Image src={BackgroundCard} alt="BackgroundCard"/>
             </CardFront>
             <CardBack>
-                <Image src={images[id]} alt="FacelessVoid"/>
+                <Image src={images[data.i]} alt="FacelessVoid"/>
             </CardBack>
         </CardContainer>
     )
@@ -36,14 +33,13 @@ const CardContainer = styled.div`
     & :last-child {
       transform: rotateY(360deg);
     }
-  `}
-  //&:hover :first-child {
-  //  transform: rotateY(180deg);
-  //}
-  //
-  //&:hover :last-child {
-  //  transform: rotateY(360deg);
-  //}
+  `} //&:hover :first-child {
+          //  transform: rotateY(180deg);
+          //}
+          //
+          //&:hover :last-child {
+          //  transform: rotateY(360deg);
+          //}
   z-index: 23;
 `;
 
@@ -71,7 +67,7 @@ const CardBase = styled.div`
 `;
 
 const CardFront = styled(CardBase)`
-    z-index: 25;
+  z-index: 25;
 `;
 
 const CardBack = styled(CardBase)`
