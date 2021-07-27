@@ -10,7 +10,6 @@ const App = () => {
     const [openedCards, SetOpenedCards] = useState([]);
     const [isGameStarted] = useState(false);
     const [cardArray] = useState(generateArray(RANGE_ARRAY));
-    const [timer, SetTimer] = useState('');
     const [seconds, SetSeconds] = useState(5);
 
 
@@ -19,20 +18,15 @@ const App = () => {
         console.log("isGameStarted: ", isGameStarted)
     }, [cardArray, isGameStarted]);
 
-    // const countDown = () => {
-    //     SetSeconds(seconds - 1)
-    //     if (seconds === 0) {
-    //         // clearInterval(timer)
-    //         console.log(0)
-    //     }
-    // }
-
-    // const startTimer = () => {
-    //     const interval = setInterval(() => {
-    //         countDown()
-    //     }, 1000)
-    //     SetTimer(interval)
-    // }
+    const startTimer = () => {
+        const interval = setInterval(() => {
+            if (seconds !== 0) {
+                SetSeconds(seconds-1)
+            } else {
+                clearInterval(interval)
+            }
+        }, 1000)
+    }
 
     // useEffect(() => {
     //     if (openedCards.length >= 2) {
@@ -50,43 +44,38 @@ const App = () => {
         if (!openedCards.includes(index)) {
             SetOpenedCards([...openedCards, index]);
 
-            // if (openedCards.length === 0) {
-            //     startTimer()
-            // } else {
-            //     //     setTimeout(() => {
-            //     //         SetOpenedCards([]);
-            //     //     }, 2000)
-            //     // }
-            // }
+            if (openedCards.length === 0) {
+                startTimer()
+            }
         }
-
-        console.log("Opened Cards: ", openedCards);
-
-        return (
-            <Container>
-                {
-                    // isGameStarted ?
-                    <CardContainer>
-                        {cardArray.map((i, index) =>
-                            // eslint-disable-next-line no-unused-vars
-                            <Card onClickProp={cardClick} key={index}
-                                  data={{
-                                      i,
-                                      index,
-                                      openedCards,
-                                  }}
-                            >{index + 1}</Card>
-                        )}
-                    </CardContainer>
-
-                    // :
-                    // <ButtonContainer>
-                    //     <Button info onClick={gameStart}>Start game</Button>
-                    // </ButtonContainer>
-                }
-            </Container>
-        );
     }
+
+    console.log("Opened Cards: ", openedCards);
+
+    return (
+        <Container>
+            {
+                // isGameStarted ?
+                <CardContainer>
+                    {cardArray.map((i, index) =>
+                        // eslint-disable-next-line no-unused-vars
+                        <Card onClickProp={cardClick} key={index}
+                              data={{
+                                  i,
+                                  index,
+                                  openedCards,
+                              }}
+                        >{index + 1}</Card>
+                    )}
+                </CardContainer>
+                // :
+                // <ButtonContainer>
+                //     <Button info onClick={gameStart}>Start game</Button>
+                // </ButtonContainer>
+            }
+            <h1>{seconds}</h1>
+        </Container>
+    );
 }
 
 export default App;
@@ -97,7 +86,7 @@ export default App;
 // `;
 
 const CardContainer = styled.div`
-display: grid;
-grid-gap: 15px;
-grid-template-columns: repeat(3, 1fr);
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: repeat(3, 1fr);
 `;
