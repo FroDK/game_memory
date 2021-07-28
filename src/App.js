@@ -81,10 +81,6 @@ const App = () => {
         }
     }
 
-    // console.log("Opened Cards: ", openedCards);
-    // console.log('Seconds: ', seconds)
-    // console.log("SCORE: ", score)
-
     return (
         <Container>
             <ScoreText>Score: {score}</ScoreText>
@@ -108,7 +104,6 @@ const App = () => {
                 //     <Button info onClick={gameStart}>Start game</Button>
                 // </ButtonContainer>
             }
-            {/*<TimerText>{seconds ? seconds : 'Time left'}</TimerText>*/}
             <LoadingBar seconds={seconds}/>
         </Container>
     );
@@ -137,9 +132,6 @@ const ScoreText = styled.h1`
 //   color: #FA709A;
 // `;
 
-/**
- * @param {{seconds:number}} props
- */
 const LoadingBar = styled.div`
   
   margin: 2rem 0;
