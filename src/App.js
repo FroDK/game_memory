@@ -52,6 +52,7 @@ const App = () => {
             setIsTimerStarted(false)
             setSeconds(TIMER_SECONDS)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [openedCards])
 
     useEffect(() => {
