@@ -1,5 +1,5 @@
 import styled, {css} from 'styled-components';
-import BackgroundCard from '../images/kartinki-dota-2-34.jpg'
+import BackgroundCard from '../images/card-background.jpg'
 import {importImages} from '../lib';
 
 const images = importImages(require.context('../images/heroes', false, /\.(png|jpe?g|svg)$/))
@@ -7,7 +7,9 @@ const images = importImages(require.context('../images/heroes', false, /\.(png|j
 const Card = ({data, onClickProp}) => {
     return (
         <CardContainer onClick={e => onClickProp(e, data.index, data.i)}
-                       active={data.openedCards.includes(data.index)}>
+                       active={data.openedCards.includes(data.index) && !data.deletedCards.includes(data.index)}
+                       deleted={data.deletedCards.includes(data.index)}
+        >
             <CardFront>
                 <Image src={BackgroundCard} alt="BackgroundCard"/>
             </CardFront>
@@ -24,6 +26,7 @@ const CardContainer = styled.div`
   height: 120px;
   cursor: pointer;
   perspective: 1000px;
+  transition: all .5s;
 
   ${props => props.active && css`
     & :first-child {
@@ -33,13 +36,12 @@ const CardContainer = styled.div`
     & :last-child {
       transform: rotateY(360deg);
     }
-  `} //&:hover :first-child {
-          //  transform: rotateY(180deg);
-          //}
-          //
-          //&:hover :last-child {
-          //  transform: rotateY(360deg);
-          //}
+  `}
+
+  ${props => props.deleted && css`
+    width: 0;
+    height: 0;
+  `}
   z-index: 23;
 `;
 
