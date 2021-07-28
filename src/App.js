@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {generateArray} from "./lib/";
 import {useEffect, useState} from "react";
 import useInterval from "./hooks/useInterval";
+import TableRecords from "./components/TableRecords";
 
 const DELAY = 100
 const TIMER_SECONDS = (5000)
@@ -86,19 +87,23 @@ const App = () => {
             <ScoreText>Score: {score}</ScoreText>
             {
                 // isGameStarted ?
-                <CardContainer>
-                    {cardArray.map((i, index) =>
-                        // eslint-disable-next-line no-unused-vars
-                        <Card onClickProp={cardClick} key={index}
-                              data={{
-                                  i,
-                                  index,
-                                  openedCards,
-                                  deletedCards,
-                              }}
-                        >{index + 1}</Card>
-                    )}
-                </CardContainer>
+
+                // <CardContainer>
+                //     {cardArray.map((i, index) =>
+                //         // eslint-disable-next-line no-unused-vars
+                //         <Card onClickProp={cardClick} key={index}
+                //               data={{
+                //                   i,
+                //                   index,
+                //                   openedCards,
+                //                   deletedCards,
+                //               }}
+                //         >{index + 1}</Card>
+                //     )}
+                // </CardContainer>
+
+                <TableRecords/>
+
                 // :
                 // <ButtonContainer>
                 //     <Button info onClick={gameStart}>Start game</Button>
