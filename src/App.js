@@ -52,7 +52,7 @@ const App = () => {
             setIsTimerStarted(false)
             setSeconds(TIMER_SECONDS)
         }
-    }, [openedCards])
+    }, [cardArray, deletedCards, openedCards, score, seconds])
 
     useEffect(() => {
         if (seconds === 0) {
@@ -66,19 +66,11 @@ const App = () => {
         setSeconds(seconds - DELAY);
     }, isTimerStarted ? DELAY : null);
 
-    // useEffect(() => {
-    //     if (openedCards.length >= 2) {
-    //         setOpenedCards([]);
-    //     }
-    // }, [openedCards])
-
     // const gameStart = () => {
     //     setIsGameStarted(!isGameStarted);
     // }
 
-    const cardClick = (e, index, i) => {
-        // console.log(i)
-
+    const cardClick = (e, index) => {
         if (!openedCards.includes(index)) {
             setOpenedCards([...openedCards, index]);
 
@@ -140,15 +132,19 @@ const ScoreText = styled.h1`
   color: #FEE140;
 `;
 
-const TimerText = styled.h1`
-  color: #FA709A;
-`;
+// const TimerText = styled.h1`
+//   color: #FA709A;
+// `;
 
+/**
+ * @param {{seconds:number}} props
+ */
 const LoadingBar = styled.div`
+  
   margin: 2rem 0;
   height: 20px;
   width: ${props => {
-    return (780 / TIMER_SECONDS * props.seconds)
+    return (780 / TIMER_SECONDS * props["seconds"])
   }}px;
   border-radius: 3px;
   background-image: linear-gradient(to right, #fa709a 0%, #fee140 100%);
