@@ -8,7 +8,7 @@ import useInterval from "./hooks/useInterval";
 const DELAY = 100
 const TIMER_SECONDS = (5000)
 const RANGE_ARRAY = 6;
-const SCORE_DOWNGRADE = [70, 20];
+const SCORE_DOWNGRADE = [50, 20];
 
 const App = () => {
     const [deletedCards, setDeletedCards] = useState([]);
@@ -52,7 +52,7 @@ const App = () => {
             setIsTimerStarted(false)
             setSeconds(TIMER_SECONDS)
         }
-    }, [cardArray, deletedCards, openedCards, score, seconds])
+    }, [openedCards])
 
     useEffect(() => {
         if (seconds === 0) {
@@ -81,8 +81,8 @@ const App = () => {
     }
 
     // console.log("Opened Cards: ", openedCards);
-    console.log('Seconds: ', seconds)
-    console.log("SCORE: ", score)
+    // console.log('Seconds: ', seconds)
+    // console.log("SCORE: ", score)
 
     return (
         <Container>
