@@ -6,15 +6,24 @@ const images = importImages(require.context('../images/heroes', false, /\.(png|j
 
 const Card = ({data, onClickProp}) => {
     return (
-        <CardContainer onClick={e => onClickProp(e, data.index, data.i)}
+        <CardContainer onClick={data.canOpenCards ? e => onClickProp(e, data.index, data.i) : null}
                        active={data.openedCards.includes(data.index) && !data.deletedCards.includes(data.index)}
                        deleted={data.deletedCards.includes(data.index)}
         >
-            <CardFront>
+            <CardFront onDragStart={e => e.preventDefault()}>
                 <Image src={BackgroundCard} alt="BackgroundCard"/>
             </CardFront>
-            <CardBack>
-                <Image src={images[data.i]} alt="FacelessVoid"/>
+            <CardBack onDragStart={e => e.preventDefault()}>
+                {
+                    // IF CARD WAS CLICKED THEN SHOW IMAGE
+                    // this is necessary so that the user cannot determine through the source code where which cards are located
+                    data.openedCardsForCloseAnimation.includes(data.index) ?
+                        <Image
+                            src={images[data.i]}
+                            alt={images[data.i].split('/')[3].split('.')[0].split('_')[0]}
+                        /> : null
+                }
+
             </CardBack>
         </CardContainer>
     )
@@ -22,13 +31,15 @@ const Card = ({data, onClickProp}) => {
 
 const CardContainer = styled.div`
   position: relative;
-  width: 250px;
-  height: 120px;
+  top: 0;
+  left: 0;
+  width: 210px;
+  height: 100px;
   cursor: pointer;
   perspective: 1000px;
-  transition: all .5s;
+  transition: all .3s;
 
-  ${props => props.active && css`
+  ${props => props['active'] && css`
     & :first-child {
       transform: rotateY(180deg);
     }
@@ -38,7 +49,7 @@ const CardContainer = styled.div`
     }
   `}
 
-  ${props => props.deleted && css`
+  ${props => props['deleted'] && css`
     width: 0;
     height: 0;
   `}
