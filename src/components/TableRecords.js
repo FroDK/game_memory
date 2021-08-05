@@ -38,6 +38,8 @@ const TableRecords = ({score, timer}) => {
 
             // If table of records does not include current score
             if ((!recordsTemp.map(i => i.score).includes(score))) {
+                if (Math.max(...recordsTemp.map(i => i.score)) < score) setIsNewRecord(true)
+
                 if ((recordsTemp.length >= MAX_TABLE_SIZE) && (Math.min(...recordsTemp.map(i => i.score)) < score)) {
                     recordsTemp.sort(sortArray)
                     recordsTemp = [...recordsTemp.slice(1, recordsTemp.length), saveData]
@@ -48,7 +50,6 @@ const TableRecords = ({score, timer}) => {
                 recordsTemp.sort(sortArrayReverse)
                 localStorage.setItem('records', JSON.stringify(recordsTemp))
                 setRecords(recordsTemp)
-                setIsNewRecord(true)
                 setIsLoadedAndSavedData(true)
             }
 
@@ -89,7 +90,7 @@ const TableRecords = ({score, timer}) => {
                                         <TR key={index} active={item.score === score && isNewRecord}>
                                             <TD>{item.dateTime}</TD>
                                             <TD>{item.score}</TD>
-                                            <TD>{convertToTime(timer)}</TD>
+                                            <TD>{convertToTime(item.timer)}</TD>
                                         </TR>
                                     )
                                 }
