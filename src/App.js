@@ -18,7 +18,7 @@ const DELAY = 1000
 // total timer second
 const TIMER_SECONDS = (5)
 // length is unique indexes e.g. (6+6=12 total pairs of cards)
-const RANGE_ARRAY = 3;
+const RANGE_ARRAY = 18;
 // random decrease score between these values
 const SCORE_DECREASE = [15, 5];
 
